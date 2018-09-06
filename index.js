@@ -72,7 +72,7 @@ class SortableFlatList extends Component {
 
           this._androidStatusBarOffset = (isTranslucent || isHidden) ? StatusBar.currentHeight : 0
         }
-        this._offset.setValue((this._additionalOffset + this._containerOffset + this._layoutOffset - this._androidStatusBarOffset) * -1)
+        this._offset.setValue(((this._additionalOffset + this._containerOffset - this._androidStatusBarOffset) - this._layoutOffset) * -1)
         return false
       },
       onMoveShouldSetPanResponder: (evt, gestureState) => {
