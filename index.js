@@ -35,6 +35,7 @@ class SortableFlatList extends Component {
   _scrollOffset = 0
   _containerSize
   _containerOffset
+  _layoutOffset
   _move = 0
   _hasMoved = false
   _refs = []
@@ -71,7 +72,7 @@ class SortableFlatList extends Component {
 
           this._androidStatusBarOffset = (isTranslucent || isHidden) ? StatusBar.currentHeight : 0
         }
-        this._offset.setValue((this._additionalOffset + this._containerOffset - this._androidStatusBarOffset) * -1)
+        this._offset.setValue((this._additionalOffset + this._containerOffset + this._layoutOffset - this._androidStatusBarOffset) * -1)
         return false
       },
       onMoveShouldSetPanResponder: (evt, gestureState) => {
@@ -342,7 +343,8 @@ class SortableFlatList extends Component {
     return (
       <View
         onLayout={e => {
-          console.log('layout', e.nativeEvent)
+          this._layoutOffset = horizontal ? e.nativeEvent.layout.x : e.nativeEvent.layout.y;
+          console.log('layout offset', e.nativeEvent, this._layoutOffset)
         }}
         ref={this.measureContainer}
         {...this._panResponder.panHandlers}
